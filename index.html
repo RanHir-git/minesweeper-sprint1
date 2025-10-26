@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>MineSweeper</title>
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+
+	<body onload="onInit()">
+        
+		<h1>MineSweeper</h1>
+        <div id="timer">00:00:00</div>
+		<table>
+			<tbody class="board"></tbody>
+			
+		</table>
+		
+		<div class="score-board">Score: <span id="score">0</span></div>
+		<div class="difficulty-btns-container">
+            <h3 class="small-header">Choose Difficulty:</h3>
+            <div class="difficulty-btns">
+                <button onclick="setDifficulty(16)">4</button>
+                <button onclick="setDifficulty(64)">8</button>
+                <button onclick="setDifficulty(144)">12</button>
+                <button onclick="setDifficulty()">costume</button>
+            </div>
+        </div>
+		<script src="js/utils.js"></script>
+		<script src="js/board.js"></script>
+	</body>
+</html>
