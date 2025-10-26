@@ -1,23 +1,102 @@
+body {
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
 table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     margin: 20px auto;
 }
 
 td {
-    width: 40px;
-    height: 40px;
-    border: 1px solid #999;
+    width: 20px;
+    height: 20px;
     text-align: center;
     vertical-align: middle;
-    font-size: 20px;
+    font-size: 10px;
     cursor: pointer;
-    background-color: #ccc;
+    background-color: #c0c0c0;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
 }
 
 td:hover {
     background-color: #aaa;
 }
+
 td.revealed {
     background-color: #eee;
     cursor: default;
+}
+
+.mines-1 {
+    color: blue;
+    font-weight: bold;
+}
+
+.mines-2 {
+    color: green;
+    font-weight: bold;
+}
+
+.mines-3 {
+    color: red;
+    font-weight: bold;
+}
+
+.mines-4 {
+    color: darkblue;
+    font-weight: bold;
+}
+
+.mines-5 {
+    color: darkred;
+    font-weight: bold;
+}
+
+.mines-6 {
+    color: cyan;
+    font-weight: bold;
+}
+
+.mines-7 {
+    color: black;
+    font-weight: bold;
+}
+
+.mines-8 {
+    color: gray;
+    font-weight: bold;
+}
+
+.smiley button {
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 0;
+    border: 2px solid #000000;
+}
+
+#hints {
+    margin: 10px 0;
+    font-size: 30px;
+    background-color: #f0f0f0;
+}
+
+.hint-bulb {
+    display: inline-block;
+    padding: 5px;
+    margin: 0 5px;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+    /* Smooth transition */
+}
+
+.hint-bulb.used {
+    filter: none;
 }
