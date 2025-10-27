@@ -2,17 +2,17 @@
 
 
 
-function useHint(hintNumber) {
+function useHint(hintNumber) {  
     if (!gGame.isOn) return //check if game started first
     const hintBulb = document.getElementById(`hint${hintNumber}`)
     if (!hintBulb.classList.contains('used') && !isHintMode) {
-        isHintMode = true
-        hintBulb.classList.add('used')
+        isHintMode = true   //next press in onCellClicked will use hint
+        hintBulb.classList.add('used')  //change lightbulb style
         console.log('Hint mode activated!')
     }
 }
 
-function revealHint(rowIdx, colIdx) {
+function revealHint(rowIdx, colIdx) {   //reveal the cell and all adjacent cells
     revealHintCell(rowIdx, colIdx)
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
         if (i < 0 || i >= gBoard.length) continue
@@ -38,7 +38,7 @@ function hideHint(rowIdx, colIdx) {// turns back to the original cells
         }
     }
 }
-function revealHintCell(i, j) {
+function revealHintCell(i, j) { //reveal 1 cell
     const cell = gBoard[i][j]
     if (!cell.isRevealed) {
         const elCell = document.querySelector(`.cell-${i}-${j}`)
@@ -54,7 +54,7 @@ function revealHintCell(i, j) {
     }
 }
 
-function hideHintCell(i, j) {
+function hideHintCell(i, j) {   //turn back 1 cell
     const cell = gBoard[i][j]
     if (!cell.isRevealed) {
         const elCell = document.querySelector(`.cell-${i}-${j}`)
@@ -67,7 +67,7 @@ function hideHintCell(i, j) {
 }
 
 
-function safeClick() {
+function safeClick() {  // start safeClick mode
     if (!gGame.isOn) return
     if (safeClickCounter < 3 && !isSafeClickMode) {
         isSafeClickMode = true
@@ -76,7 +76,7 @@ function safeClick() {
     }
 }
 
-function revealSafeClick() {
+function revealSafeClick() {    //reveal random safe cell (adds all safe to positions, and then choosing randomly from them)
     const positions = []
     const boardSize = gLevel.SIZE
     for (var i = 0; i < boardSize; i++) {

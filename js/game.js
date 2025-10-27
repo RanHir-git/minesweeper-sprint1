@@ -2,8 +2,10 @@
 
 
 function onCellClicked(elCell, rowIdx, colIdx) {
+    console.log('onCellClicked - costumeMode:', costumeMode)
     const cell = gBoard[rowIdx][colIdx]
     if (costumeMode === 1) { //custom mode
+        console.log('In costume mode block')
         cell.isMine = !cell.isMine // Toggle mine
         if (cell.isMine) {
             gLevel.MINES++
@@ -12,8 +14,10 @@ function onCellClicked(elCell, rowIdx, colIdx) {
             gLevel.MINES--
             elCell.innerHTML = ''
         }
+         console.log('About to return from costume mode')
         return
     }
+    console.log('After costume mode check - this should NOT print!')
     if (!gGame.isOn) { // first click
         if (costumeMode === 0) {
             addMinesToBoard(gBoard, rowIdx, colIdx)
@@ -24,7 +28,7 @@ function onCellClicked(elCell, rowIdx, colIdx) {
             startTimer()
         }
     }
-    else if (cell.isRevealed || cell.isMarked) return
+    else if (cell.isRevealed || cell.isMarked) return   //does nothing if cell flagged/open already
     if (isHintMode) {   // hint mode
         if (!cell.isRevealed) {
             revealHint(rowIdx, colIdx)
@@ -32,7 +36,7 @@ function onCellClicked(elCell, rowIdx, colIdx) {
         }
         return
     }
-    if (isSafeClickMode) return
+    if (isSafeClickMode) return 
     if (cell.isMine) { // clicked on a mine
         elCell.innerHTML = '💣'
         elCell.classList.add('revealed-mine')
@@ -43,7 +47,7 @@ function onCellClicked(elCell, rowIdx, colIdx) {
                 gameOver(false, rowIdx, colIdx)
             }, 100)
         } else {
-            // Only hide the mine if game continues
+            // hide the mine if game continues (still have lives)
             setTimeout(() => {
                 cell.isRevealed = false
                 elCell.innerHTML = ''
@@ -56,7 +60,7 @@ function onCellClicked(elCell, rowIdx, colIdx) {
     }
     gLastMove = []
     revealCell(cell, rowIdx, colIdx)
-    if (cell.minesAroundCount === 0) expandReveal(gBoard, rowIdx, colIdx)
+    if (cell.minesAroundCount === 0) expandReveal(gBoard, rowIdx, colIdx) //call for full expand
     if (checkGameOver()) {//win condition
         setTimeout(() => {
             gameOver(true)
@@ -66,7 +70,7 @@ function onCellClicked(elCell, rowIdx, colIdx) {
 
 
 function revealCell(currCell, i, j) {
-    if (gLastMove !== null && !currCell.isRevealed) {
+    if (gLastMove !== null && !currCell.isRevealed) { //save cell to gLastMove - for undo
         gLastMove.push({
             row: i,
             col: j,
@@ -74,7 +78,7 @@ function revealCell(currCell, i, j) {
             minesAroundCount: currCell.minesAroundCount
         })
     }
-    currCell.isRevealed = true
+    currCell.isRevealed = true  // reveal cell content, and update vars
     gGame.revealedCount++
     const elCurrCell = document.querySelector(`.cell-${i}-${j}`)
     elCurrCell.classList.add('revealed')
@@ -89,7 +93,7 @@ function revealCell(currCell, i, j) {
 function onCellMarked(elCell, i, j) {
     const cell = gBoard[i][j]
     if (cell.isRevealed) return
-    if (costumeMode === 1) return
+    if (costumeMode === 1) return //still making custom board
     cell.isMarked = !cell.isMarked
 
     if (cell.isMarked) {
@@ -105,7 +109,7 @@ function onCellMarked(elCell, i, j) {
 }
 
 
-function expandReveal(board, rowIdx, colIdx) {
+function expandReveal(board, rowIdx, colIdx) {  //recursive full expend
     const cell = board[rowIdx][colIdx]
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
         if (i < 0 || i >= board.length) continue
@@ -121,16 +125,16 @@ function expandReveal(board, rowIdx, colIdx) {
 }
 
 function undoMove() {
-    if (!gGame.isOn) {
+    if (!gGame.isOn) {  //game hasnt started
         console.log('Game not started')
         return
     }
-    if (!gLastMove || gLastMove.length === 0) {
+    if (!gLastMove || gLastMove.length === 0) { //zero moves
         console.log('No move to undo')
         return
     }
     console.log('Undoing move with', gLastMove.length, 'cells')
-    for (const cellData of gLastMove) {
+    for (const cellData of gLastMove) { //undo all cells of last move
         const cell = gBoard[cellData.row][cellData.col]
         const elCell = document.querySelector(`.cell-${cellData.row}-${cellData.col}`)
         cell.isRevealed = cellData.wasRevealed
@@ -143,6 +147,7 @@ function undoMove() {
 }
 
 function checkGameOver() {
+    if (costumeMode === 1) return false // dont check win durning custom mine placement
     const totalCells = gLevel.SIZE * gLevel.SIZE
     const totalMinesChecked = gGame.markedCount
     const revealedCells = gGame.revealedCount
@@ -159,12 +164,12 @@ function gameOver(win, mineRow = null, mineCol = null) {
     }
     else {
         elSmiley.innerText = '🤯'
-        showAllMines(mineRow, mineCol)
+        showAllMines(mineRow, mineCol)  //the coordinates for the mine are for the end of game showing of the board
         alert('Game Over! You have lost all lives!')
     }
 }
 
-function showAllMines(rowIdx, colIdx) {
+function showAllMines(rowIdx, colIdx) { //when lost
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[i].length; j++) {
             const cell = gBoard[i][j]

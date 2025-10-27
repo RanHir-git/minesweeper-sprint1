@@ -50,7 +50,7 @@ function renderBoard(board) {
         for (var j = 0; j < board[0].length; j++) {
             const cell = board[i][j]
             const className = `cell cell-${i}-${j}`
-            const cellContent = (costumeMode === 1 && cell.isMine) ? '💣' : ''
+            const cellContent = (costumeMode === 1 && cell.isMine) ? '💣' : ''  // if we are still making the board in custom
             strHTML += `<td class="${className}" onclick="onCellClicked(this, ${i}, ${j})"
                         oncontextmenu="onCellMarked(this, ${i}, ${j}); return false;">
                             ${cellContent}
@@ -62,21 +62,21 @@ function renderBoard(board) {
     elContainer.innerHTML = strHTML
 }
 
-function setCostumeMode() {
-    if (costumeMode === 0) {
+function setCostumeMode() { //costumMode=0 : normal, =1: setting mines, =2: playing custom mode
+    if (costumeMode === 0) {    //start setting mines stage
         var tableSize = +prompt('Enter Table Size (num of cells on each column/row): ')
-        if (!tableSize || tableSize < 2 || tableSize > 20) {
-            alert('Please enter a valid size between 2 and 20')
+        if (!tableSize) {
+            alert('Please enter a valid size')
             return
         }
         gLevel.SIZE = tableSize
         gLevel.MINES = 0
-        costumeMode = 1
         const elBtn = document.querySelector('.smiley button')
         resetGame(elBtn)
+        costumeMode = 1
         alert('Click on cells to place mines. When done, click "Custom" again.')
     }
-    else if (costumeMode === 1) {
+    else if (costumeMode === 1) {   //end setting stage
         if (gLevel.MINES === 0) {
             alert('Please place at least one mine before starting!')
             return
