@@ -10,31 +10,61 @@
 <body onload="onInit()">
 
 	<h1>MineSweeper</h1>
-	<div id="timer">00:00:00</div>
-	<div id="lives">Lives: ❤️❤️❤️</div>
-	<div id="HINTS">HINTS:
-		<span class="hint-bulb" id="hint1" onclick="useHint(1)">💡</span>
-		<span class="hint-bulb" id="hint2" onclick="useHint(2)">💡</span>
-		<span class="hint-bulb" id="hint3" onclick="useHint(3)">💡</span>
+	<span class="dark-mode-class"><button onclick="darkModeSwitch(this)">☀️</button></span>
+	<div class="game-stats">
+		<div id="timer">Time: <span class="timeDigits">00:00:00</span></div>
+		<div id="lives">Lives: ❤️❤️❤️</div>
+		<div id="HINTS">HINTS:
+			<span class="hint-bulb" id="hint1" onclick="useHint(1)">💡</span>
+			<span class="hint-bulb" id="hint2" onclick="useHint(2)">💡</span>
+			<span class="hint-bulb" id="hint3" onclick="useHint(3)">💡</span>
+		</div>
 	</div>
-	<div class="smiley"><button onclick="resetGame(this)">😃</button></div>
+	<div id="Safe-Click"><button onclick="safeClick()">Safe-Click</button></div>
+	<div class="smiley"><button onclick="resetGame(this)">😃</button> <button onclick="undoMove()">↩️</button></div>
 	<table>
 		<tbody class="board"></tbody>
 
 	</table>
-
-	<div class="score-board">Score: <span id="score">0</span></div>
 	<div class="difficulty-btns-container">
 		<h3 class="small-header">Choose Difficulty:</h3>
 		<div class="difficulty-btns">
 			<button onclick="setDifficulty(4)">Beginner</button>
 			<button onclick="setDifficulty(8)">Medium</button>
 			<button onclick="setDifficulty(12)">Expert</button>
-			<button onclick="setDifficulty()">costume</button>
+			<button onclick="setCostumeMode()">costume</button>
+		</div>
+	</div>
+	<div class="scores-container">
+		<h2>Best Scores</h2>
+		<div class="scores-grid">
+			<div class="score-category">
+				<h3>Beginner</h3>
+				<ol id="beginner-scores">
+					<li>None</li>
+				</ol>
+			</div>
+			<div class="score-category">
+				<h3>Medium</h3>
+				<ol id="medium-scores">
+					<li>None</li>
+				</ol>
+			</div>
+			<div class="score-category">
+				<h3>Expert</h3>
+				<ol id="expert-scores">
+					<li>None</li>
+				</ol>
+			</div>
 		</div>
 	</div>
 	<script src="js/utils.js"></script>
+	<script src="js/timer.js"></script>
 	<script src="js/board.js"></script>
+	<script src="js/game.js"></script>
+	<script src="js/hints.js"></script>
+	<script src="js/scoreBoard.js"></script>
+	<script src="js/main.js"></script>
 </body>
 
 </html>

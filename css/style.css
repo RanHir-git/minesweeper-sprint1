@@ -1,6 +1,26 @@
+:root {
+  --bg-color: #f0f0f0;
+  --text-color: #000000;
+  --revealed-color:#eee;
+  --score-bg-color:#e0e0e0;
+}
+
+
 body {
     text-align: center;
-    background-color: #f0f0f0;
+    background-color: var(--bg-color);
+    transition: background-color 0.3s, color 0.3s;
+    color:var(--text-color)
+}
+
+body.dark-mode {
+  --bg-color: #121212;
+  --text-color: #f0f0f0;
+  --score-bg-color:#454545;
+}
+
+.dark-mode-class button{
+    background-color: var(--bg-color);
 }
 
 table {
@@ -8,7 +28,7 @@ table {
     border-spacing: 0;
     margin: 20px auto;
 }
-
+/*unrevealed cells*/
 td {
     width: 20px;
     height: 20px;
@@ -22,16 +42,77 @@ td {
     border-right: 1px solid #808080;
     border-bottom: 1px solid #808080;
 }
+.game-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 20px auto;
+    width: fit-content;
+}
+/*safe click styling*/
+
+#Safe-Click button {
+    align-items: center;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    border: 2px solid #a9a7a7;
+    transition: filter 0.3s ease;
+    background-color: #42aafe;
+    color:#e0e0e0
+}
+
+#Safe-Click button:hover {
+    background-color: #1a48ba;
+}
+
+#Safe-Click button:active {
+    border-color: #000000 #000000 #000000 #000000;
+}
+
+#lives, #lives, #HINTS, #Safe-Click {
+    margin:5px 0;
+}
+
+.difficulty-btns button{
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.timeDigits {
+    display: inline-block;
+    background-color: #000000;
+    color: #ff0000;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 5px 5px;
+    border: 2px inset #808080;
+    letter-spacing: 1px;
+    text-align: center;
+    min-width: 100px;
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 3px #ff0000;
+    vertical-align: middle;
+}
+#timer {
+    font-size: 20px;
+}
 
 td:hover {
     background-color: #aaa;
 }
-
+/*revealed cell*/
 td.revealed {
-    background-color: #eee;
+    background-color:var(--revealed-color);
     cursor: default;
 }
-
+/*styling of currently pressed mine*/
+td.revealed-mine {
+    background-color: red;
+    cursor: default;
+}
+/*styling of nearest mines numbers*/
 .mines-1 {
     color: blue;
     font-weight: bold;
@@ -74,14 +155,16 @@ td.revealed {
 
 .smiley button {
     align-items: center;
+    background-color:#c0c0c0 ;
     width: 30px;
     height: 30px;
     font-size: 20px;
     border-radius: 5px;
     padding: 0;
     border: 2px solid #000000;
+    transition: filter 0.3s ease; /* Smooth transition */
 }
-
+/* hints styling*/
 #hints {
     margin: 10px 0;
     font-size: 30px;
@@ -94,9 +177,47 @@ td.revealed {
     margin: 0 5px;
     filter: grayscale(100%);
     transition: filter 0.3s ease;
-    /* Smooth transition */
+    
 }
 
 .hint-bulb.used {
     filter: none;
+}
+
+.difficulty-btns{
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+
+/*scoreboard styling*/
+.scores-container{
+    margin: 30px auto;
+    max-width: 800px;
+    color: var(--text-color);
+}
+.scores-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+.score-category {
+    background-color:var(--score-bg-color);
+    padding: 15px;
+    border-radius: 8px;
+    min-width: 200px;
+}
+.score-category h3 {
+    margin-top: 0;
+}
+.score-category ol {
+    color:var(--text-color);
+    list-style-position: inside;
+    padding: 0;
+    margin: 10px 0;
+}
+.score-category li {
+    color:var(--text-color);
+    padding: 5px 0;
 }
